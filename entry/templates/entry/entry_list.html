@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="page-header">
+    <h1>Entry List
+      <small> with edit and delete url</small>
+    </h1>
+  </div>
+  <p><a class="btn btn-lg btn-primary" href="{% url "entry_add" %}">Add New Entry</a></p>
+  <table class="table table-condensed table-hover">
+    <thead>
+      <th>LIST with images</th>
+    </thead>
+    <tbody>
+    {% for entry in entry_list %}
+      <tr>
+        <td><p><b># {{ entry.id }}</b> {{ entry.title }}</p><br>
+        <p><a href="{% url "entry_update" entry.id %}">Редактировать</a> &nbsp;&nbsp;&nbsp; <a href="{% url "entry_delete" entry.id %}">Удалить</a></p>
+        </td>
+      <tr/>
+      <tr>
+        <td>
+          {% for pictur in entry.picture_set.all %}
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+              <p>{{ pictur.title }}</p>
+              <p>
+              <a href="#" class="thumbnail">
+                <img src="{{ pictur.image.url }}" alt="">
+              </a>
+            </p>
+            </div>
+          {% endfor %}
+        </td>
+      </tr>
+    {% endfor %}
+
+    </tbody>
+  </table>
+{% endblock %}

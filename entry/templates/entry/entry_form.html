@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <form method="post" action="" enctype="multipart/form-data">
+    <div class="page-header">
+      <h1>Entry Form
+        <small> with file uploader</small>
+      </h1>
+    </div>
+    {% csrf_token %}
+    {{ form | crispy }}
+    <div class="page-header">
+      <h1>Picture Form</h1>
+    </div>
+    {{ picture_form.management_form }}
+    {{ picture_form.non_form_errors }}
+    {{ picture_form | crispy }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}
