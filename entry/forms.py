@@ -29,5 +29,5 @@ class PictureForm(ModelForm):
 
 
 # TODO: указать явно form=PictureForm и добавить сохранение пользователя
-PictureFormSet = inlineformset_factory(Entry, Picture, fk_name='entry', max_num=12, extra=3,
+PictureFormSet = inlineformset_factory(Entry, Picture, fk_name='entry', max_num=12, extra=1,
                                        widgets={'image': AdminResubmitImageWidget})

@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import sorl.thumbnail.fields
 from django.conf import settings
 
 
@@ -20,6 +21,7 @@ class Migration(migrations.Migration):
                 ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
+                'ordering': ('-pk',),
             },
             bases=(models.Model,),
         ),
@@ -28,10 +30,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=170)),
-                ('entry', models.ForeignKey(to='entry.Entry')),
-                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('image', sorl.thumbnail.fields.ImageField(upload_to=b'upload')),
+                ('entry', models.ForeignKey(blank=True, to='entry.Entry', null=True)),
             ],
             options={
+                'ordering': ('-pk',),
             },
             bases=(models.Model,),
         ),

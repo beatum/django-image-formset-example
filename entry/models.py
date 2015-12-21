@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from sorl.thumbnail.fields import ImageField
 
+
 class Entry(models.Model):
     """
     Description: Model Description
@@ -31,6 +32,14 @@ class Picture(models.Model):
 
     def __unicode__(self):
         return '%s' % self.title
+
+    @models.permalink
+    def get_absolute_url(self):
+        return reverse('entry_new', kwargs={'pk': self.pk})
+
+
+    def save(self, *args, **kwargs):
+        super(Picture, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ('-pk',)

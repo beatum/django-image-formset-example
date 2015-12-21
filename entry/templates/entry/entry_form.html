@@ -2,12 +2,26 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+  <div class="page-header">
+    <h1>Entry Form
+      <small> with file uploader</small>
+    </h1>
+  </div>
+  <!-- You can use a form template with a formset containing data. -->
+  <table style="display:none">
+    <tbody>
+    {% with picture_form.empty_form as form %}
+      <tr id="id_empty_form">
+        <td>
+          {% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
+          {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+          {{ form | crispy }}
+        </td>
+      </tr>
+    {% endwith %}
+    </tbody>
+  </table>
   <form method="post" action="" enctype="multipart/form-data">
-    <div class="page-header">
-      <h1>Entry Form
-        <small> with file uploader</small>
-      </h1>
-    </div>
     {% csrf_token %}
     {{ form | crispy }}
     <div class="page-header">
@@ -15,7 +29,30 @@
     </div>
     {{ picture_form.management_form }}
     {{ picture_form.non_form_errors }}
-    {{ picture_form | crispy }}
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <table id="id_orders_table" border="0" cellpadding="0" cellspacing="5">
+      <tbody>
+      {% for form in picture_form %}
+        <tr id="{{ form.prefix }}-row">
+          <td>
+            {% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
+            {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+            {{ form | crispy }}
+          </td>
+        </tr>
+      {% endfor %}
+      <table>
+        <tbody>
+        <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+  <script type="text/javascript">
+    $(function () {
+      $('#id_orders_table tbody tr').formset({
+        // For inline formsets, be sure to set the prefix, as the default prefix
+        // ('form') isn't correct.
+        // Django appears to generate the prefix from the lowercase plural
+        // name of the related model, with camel-case converted to underscores.
+        prefix: 'ordered_items'
+      })
+    })
+  </script>
 {% endblock %}

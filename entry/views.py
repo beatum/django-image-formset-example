@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 # -*- coding: utf-8 -*-
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView
+
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse
 
 
 from models import Entry
@@ -31,7 +32,7 @@ class EntryCreateView(CreateView):
     model = Entry
     form_class = EntryForm
     template_name = 'entry/entry_form.html'
-    success_url = reverse_lazy('entry_list')
+    success_url = reverse_lazy('entry_add')
 
     def get(self, request, *args, **kwargs):
         """
@@ -79,14 +80,14 @@ class EntryCreateView(CreateView):
         data-filled forms and errors.
         """
         return self.render_to_response(
-            self.get_context_data(form=form,
-                                  picture_form=picture_form))
+            self.get_context_data(form=form, picture_form=picture_form))
 
 
 class EntryUpdateView(UpdateView):
     """
     View for create Entry
     """
+
     model = Entry
     form_class = EntryForm
     success_url = reverse_lazy('entry_list')

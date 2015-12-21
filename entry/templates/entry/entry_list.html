@@ -25,13 +25,15 @@
               <p>{{ pictur.title }}</p>
               <p>
               <a href="#" class="thumbnail">
-                <img src="{{ pictur.image.url }}" alt="">
+                <img class="img-responsive" src="{{ pictur.image.url }}" alt="">
               </a>
             </p>
             </div>
           {% endfor %}
         </td>
       </tr>
+      {% empty %}
+      <p>Добавьте новую запись!</p>
     {% endfor %}
 
     </tbody>
